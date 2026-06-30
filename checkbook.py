@@ -37,6 +37,17 @@ def add_transaction_to_db(desc, category, amount, tx_type):
     conn.commit()
     conn.close()
 
+def remove_transaction_from_db():
+    """Removes all entries from database"""
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute(
+        "DELETE FROM transactions"
+    )
+    conn.commit()
+    conn.close()
+    refresh_ui_data()
+
 def fetch_all_transactions():
     """Retrieves all stored rows from the database."""
     conn = sqlite3.connect(DB_NAME)
@@ -90,11 +101,11 @@ def handle_submit():
     # Reset UI input boxes
     entry_desc.delete(0, tk.END)
     entry_amount.delete(0, tk.END)
-    combo_category.set("General")
+    combo_category.set("Unsorted")
     
     # Refresh visible tables
     refresh_ui_data()
-    messagebox.showinfo("Success", f"{tx_type} recorded cleanly!")
+    
 
 def refresh_ui_data():
     """Clears the table layout and recalculates totals across the UI dashboard."""
@@ -172,8 +183,12 @@ rad_expense.grid(row=1, column=2, sticky="w", padx=5)
 rad_deposit.grid(row=1, column=3, sticky="w", padx=5)
 
 # Action Trigger Button
-btn_submit = tk.Button(frame_input, text="Save Transaction", bg="#4CAF50", fg="white", font=("Arial", 10, "bold"), command=handle_submit, padx=10)
-btn_submit.grid(row=2, column=0, columnspan=4, pady=10) 
+btn_submit = tk.Button(frame_input, text="Save Transaction", bg="#4CAF50", fg="white", font=("Arial", 10, "bold"), command=handle_submit, padx=3)
+btn_submit.grid(row=2, column=0, columnspan=2, pady=5) 
+
+# Action Trigger Button
+btn_submit = tk.Button(frame_input, text="Delete Ledger", bg="#AF4C4C", fg="white", font=("Arial", 10, "bold"), command=remove_transaction_from_db, padx=10)
+btn_submit.grid(row=2, column=3, columnspan=2, pady=5) 
 
 # --- BOTTOM ROW: LEDGER TABLE DISPLAY ---
 frame_ledger = tk.LabelFrame(root, text=" Transaction History Ledger ", font=("Arial", 11, "bold"), bg="#f5f5f5", padx=10, pady=10)
