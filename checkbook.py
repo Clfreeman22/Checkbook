@@ -188,7 +188,7 @@ btn_submit.grid(row=2, column=0, columnspan=2, pady=5)
 
 # Action Trigger Button
 btn_submit = tk.Button(frame_input, text="Delete Ledger", bg="#AF4C4C", fg="white", font=("Arial", 10, "bold"), command=remove_transaction_from_db, padx=10)
-btn_submit.grid(row=2, column=3, columnspan=2, pady=5) 
+btn_submit.grid(row=2, column=2, columnspan=2, pady=5) 
 
 # --- BOTTOM ROW: LEDGER TABLE DISPLAY ---
 frame_ledger = tk.LabelFrame(root, text=" Transaction History Ledger ", font=("Arial", 11, "bold"), bg="#f5f5f5", padx=10, pady=10)
